@@ -26,26 +26,25 @@
     debmalloc_log(level, __FILE__, __LINE__, __func__, __VA_ARGS__)
 #endif // End of `ifndef LOG`
 
-#define malloc(size) deb_malloc(size, DEBMALLOC_LOG_LEVEL, __FILE__, __LINE__, __func__)
-#define free(ptr) deb_free(ptr, DEBMALLOC_LOG_LEVEL, __FILE__, __LINE__, __func__)
+#define malloc(size) \
+    deb_malloc(size, DEBMALLOC_LOG_LEVEL, __FILE__, __LINE__, __func__)
+#define free(ptr) \
+    deb_free(ptr, DEBMALLOC_LOG_LEVEL, __FILE__, __LINE__, __func__)
 #define calloc(nmemb, size) \
     deb_calloc(nmemb, size, DEBMALLOC_LOG_LEVEL, __FILE__, __LINE__, __func__)
 #define realloc(ptr, size) \
     deb_realloc(ptr, size, DEBMALLOC_LOG_LEVEL, __FILE__, __LINE__, __func__)
 
-void *
-deb_malloc(
+void *deb_malloc(
     size_t size, int level, const char *file, long line, const char *func
 );
 
-void *
-deb_calloc(
+void *deb_calloc(
     size_t nmemb, size_t size, int level, const char *file, long line,
     const char *func
 );
 
-void *
-deb_realloc(
+void *deb_realloc(
     void *ptr, size_t size, int level, const char *file, long line,
     const char *func
 );

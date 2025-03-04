@@ -1,5 +1,5 @@
 /// @file
-/// @brief The test code for the debmalloc. 
+/// @brief The test code for the debmalloc.
 /// @copyright
 ///   2025 Mitsutoshi Nakano
 ///   SPDX-License-Identifier: Apache-2.0
@@ -31,6 +31,6 @@ main(void)
     p = strndup(MESSAGE, PART_MESSAGE_LENGTH);
     assert(strcmp(p, PART_MESSAGE) == 0);
     free(p);
-    
+
     exit(0);
 }

@@ -116,7 +116,9 @@ deb_calloc(
 {
     debmalloc_log(level, file, line, func, "calloc(%zu, %zu)", nmemb, size);
     void *p = real_calloc(nmemb, size);
-    debmalloc_log(level, file, line, func, "calloc(%zu, %zu) = %p", nmemb, size, p);
+    debmalloc_log(
+        level, file, line, func, "calloc(%zu, %zu) = %p", nmemb, size, p
+    );
     return p;
 }
 
@@ -150,7 +152,9 @@ deb_realloc(
 {
     debmalloc_log(level, file, line, func, "realloc(%p, %zu)", ptr, size);
     void *p = real_realloc(ptr, size);
-    debmalloc_log(level, file, line, func, "realloc(%p, %zu) = %p", ptr, size, p);
+    debmalloc_log(
+        level, file, line, func, "realloc(%p, %zu) = %p", ptr, size, p
+    );
     return p;
 }
 
