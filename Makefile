@@ -33,7 +33,7 @@ test_debmalloc: libdebmalloc.so $(test_debmalloc_OBJS)
 $(test_debmalloc_OBJS): CFLAGS+=$(EXECUTABLE_CFLAGS)
 $(test_debmalloc_OBJS): $(test_debmalloc_SOURCES) $(libdebmalloc_so_HEADERS)
 check: test_debmalloc
-	./test_debmalloc
+	LD_LIBRARY_PATH=. ./test_debmalloc
 format:
 	clang-format -i $(libdebmalloc_so_SOURCES) $(libdebmalloc_so_HEADERS) $(test_debmalloc_SOURCES)
 clean:
