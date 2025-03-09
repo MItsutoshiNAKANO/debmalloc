@@ -7,51 +7,59 @@
 ///   2025 Mitsutoshi Nakano
 ///   SPDX-License-Identifier: Apache-2.0
 /// @author Mitsutoshi Nakano <ItSANgo@gmail.com>
-/// @version 0.1.0
-/// @date 2025-03-04
+/// @version 1.0.0
+/// @date 2025-03-09
 
-#if defined(USE_DEBMALLOC)
+#include <stdarg.h> ///< @see va_list(3)
+#include <stddef.h> ///< @see size_t(3)
 
-#ifndef DEBMALLOC_LOG_LEVEL
-/// @brief The default log level.
-#define DEBMALLOC_LOG_LEVEL 5
-#endif // End of `ifndef DEBMALLOC_LOG_LEVEL`
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#ifndef DEBMALLOC_LOG
-/// @brief The default log function.
-/// @param level The debug level.
-/// @param fmt The fprintf(3) format.
-/// @param ... The fprintf(3) arguments.
-#define DEBMALLOC_LOG(level, ...) \
-    debmalloc_log(level, __FILE__, __LINE__, __func__, __VA_ARGS__)
-#endif // End of `ifndef LOG`
-
-#define malloc(size) \
-    deb_malloc(size, DEBMALLOC_LOG_LEVEL, __FILE__, __LINE__, __func__)
-#define free(ptr) \
-    deb_free(ptr, DEBMALLOC_LOG_LEVEL, __FILE__, __LINE__, __func__)
-#define calloc(nmemb, size) \
-    deb_calloc(nmemb, size, DEBMALLOC_LOG_LEVEL, __FILE__, __LINE__, __func__)
-#define realloc(ptr, size) \
-    deb_realloc(ptr, size, DEBMALLOC_LOG_LEVEL, __FILE__, __LINE__, __func__)
-
-void *deb_malloc(
-    size_t size, int level, const char *file, long line, const char *func
+/// @brief The type of pointer of the logging function.
+/// @param priority The priority.
+/// @param file __FILE__.
+/// @param line __LINE__.
+/// @param func __func__.
+/// @param fmt The vfprintf(3) format.
+/// @param ap The vfprinf(3) arguments.
+typedef void (*Vlog)(
+    int priority, const char *file, long line, const char *func,
+    const char *fmt, va_list ap
 );
 
-void *deb_calloc(
-    size_t nmemb, size_t size, int level, const char *file, long line,
+extern Vlog debmalloc_vlog;
+
+void *debmalloc_malloc(
+    size_t size, int priority, const char *file, long line, const char *func
+);
+
+void *debmalloc_calloc(
+    size_t nmemb, size_t size, int priority, const char *file, long line,
     const char *func
 );
 
-void *deb_realloc(
-    void *ptr, size_t size, int level, const char *file, long line,
+void *debmalloc_realloc(
+    void *ptr, size_t size, int priority, const char *file, long line,
     const char *func
 );
 
-void
-deb_free(void *ptr, int level, const char *file, long line, const char *func);
+void debmalloc_free(
+    void *ptr, int priority, const char *file, long line, const char *func
+);
 
-#endif // End of `defined(USE_DEBMALLOC)`
+char *debmalloc_strdup(
+    const char *s, int priority, const char *file, long line, const char *func
+);
 
-#endif // End of `ifndef DEBMALLOC_H`
+char *debmalloc_strndup(
+    const char *s, size_t n, int priority, const char *file, long line,
+    const char *func
+);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // DEBMALLOC_H
