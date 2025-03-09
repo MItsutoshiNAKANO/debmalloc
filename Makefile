@@ -15,7 +15,7 @@ libdebmalloc_so_HEADERS=debmalloc.h debmalloc_macros.h
 
 test_debmalloc_SOURCES=test_debmalloc.c
 
-CFLAGS=-Wall -Werror -Wextra
+CFLAGS=-Wall -Werror -Wextra -g
 LIBRARY_CFLAGS=-fPIC -Wno-unused-function -Wno-unused-parameter\
 	-Wno-use-after-free
 EXECUTABLE_CFLAGS=-Wpedantic
