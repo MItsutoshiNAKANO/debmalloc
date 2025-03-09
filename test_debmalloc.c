@@ -21,7 +21,9 @@
 #define DEBMALLOC_PRIORITY 7
 #include "debmalloc_macros.h"
 
-void
+/// @brief The function to use the debmalloc.
+/// @param size The memory size to allocate.
+static void
 use_debmalloc(size_t size)
 {
     fprintf(stderr, "Begin %s.\n", __func__);
@@ -41,7 +43,9 @@ use_debmalloc(size_t size)
 #undef DEBMALLOC_PRIORITY
 #include "debmalloc_macros.h"
 
-void
+/// @brief The function not to use the debmalloc.
+/// @param size The memory size to allocate.
+static void
 dont_use_debmalloc(size_t size)
 {
     fprintf(stderr, "Begin %s.\n", __func__);
@@ -58,6 +62,9 @@ dont_use_debmalloc(size_t size)
     fprintf(stderr, "End %s.\n", __func__);
 }
 
+/// @brief The main function.
+/// @param argc The number of arguments.
+/// @param argv[1] The memory size to allocate.
 int
 main(int argc, char *argv[])
 {
