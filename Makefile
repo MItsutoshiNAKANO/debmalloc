@@ -20,6 +20,12 @@ LIBRARY_CFLAGS=-fPIC -Wno-unused-function -Wno-unused-parameter\
 	-Wno-use-after-free
 EXECUTABLE_CFLAGS=-Wpedantic
 
+ifdef USE_DEBMALLOC
+CFLAGS+=-DUSE_DEBMALLOC=$(USE_DEBMALLOC)
+test_debmalloc_OBJS+=libdebmalloc.so
+LDLIBS+=-L. -ldebmalloc
+endif # USE_DEBMALLOC
+
 libdebmalloc_so_OBJS=$(libdebmalloc_so_SOURCES:.c=.o)
 test_debmalloc_OBJS=$(test_debmalloc_SOURCES:.c=.o)
 
@@ -31,24 +37,8 @@ libdebmalloc.so: $(libdebmalloc_so_OBJS)
 $(libdebmalloc_so_OBJS): CFLAGS+=$(LIBRARY_CFLAGS)
 $(libdebmalloc_so_OBJS): $(libdebmalloc_so_SOURCES)
 $(test_debmalloc_OBJS): CFLAGS+=$(EXECUTABLE_CFLAGS)
-
-ifdef USE_DEBMALLOC
-
-test_debmalloc: libdebmalloc.so $(test_debmalloc_OBJS)
-	$(CC) -o test_debmalloc $(test_debmalloc_OBJS) -L. -ldebmalloc
-$(test_debmalloc_OBJS): $(test_debmalloc_SOURCES) $(libdebmalloc_so_HEADERS)
-	$(CC) -c $(CFLAGS) -DUSE_DEBMALLOC=$(USE_DEBMALLOC)\
-		-o $(test_debmalloc_OBJS) $(test_debmalloc_SOURCES)
-
-else # USE_DEBMALLOC
-
 test_debmalloc: $(test_debmalloc_OBJS)
-	$(CC) -o test_debmalloc $(test_debmalloc_OBJS)
 $(test_debmalloc_OBJS): $(test_debmalloc_SOURCES) $(libdebmalloc_so_HEADERS)
-	$(CC) -c $(CFLAGS) -o $(test_debmalloc_OBJS) $(test_debmalloc_SOURCES)
-
-endif # USE_DEBMALLOC
-
 check:
 	make clean
 	make USE_DEBMALLOC=1 all
