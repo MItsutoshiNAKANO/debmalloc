@@ -10,7 +10,7 @@
 TARGETS=libdebmalloc.so
 OBJS=debmalloc.o
 SOURCES=$(OBJS:.o=.c)
-DEPS=$(SOURCES:.c=.d)
+DEPS=$(SOURCES:.c=.dep)
 HEADERS=debmalloc.h debmalloc_macros.h
 CFLAGS=-Wall -Werror -Wextra -Wno-unused-function -Wno-unused-parameter\
 	-Wno-use-after-free -fPIC -g
@@ -21,8 +21,8 @@ all: $(TARGETS)
 libdebmalloc.so: $(OBJS)
 	$(LD) -shared -o libdebmalloc.so $(OBJS)
 $(OBJS): $(HEADERS)
-%.d: %.c
-	$(CC) $(CFLAGS) -MM -o $@ $<
+%.dep: %.c
+	$(CC) $(CFLAGS) -M -o $@ $<
 check: $(TARGETS)
 	make -f test_debmalloc.mk clean
 	make -f test_debmalloc.mk USE_DEBMALLOC=1 all

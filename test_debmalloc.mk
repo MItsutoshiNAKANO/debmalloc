@@ -10,7 +10,7 @@
 TARGETS=test_debmalloc
 OBJS=test_debmalloc.o
 SOURCES=$(OBJS:.o=.c)
-DEPS=$(SOURCES:.c=.d)
+DEPS=$(SOURCES:.c=.dep)
 
 CFLAGS=-Wall -Werror -Wextra -g
 LDLIBS=-L. -ldebmalloc
@@ -24,8 +24,8 @@ endif # USE_DEBMALLOC
 
 all: $(TARGETS)
 test_debmalloc: $(OBJS)
-%.d: %.c
-	$(CC) $(CFLAGS) -MM -o $@ $<
+%.dep: %.c
+	$(CC) $(CFLAGS) -M -o $@ $<
 format:
 	clang-format -i $(SOURCES) $(HEADERS)
 clean:
