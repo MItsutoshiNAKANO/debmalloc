@@ -12,8 +12,8 @@ OBJS=debmalloc.o
 SOURCES=$(OBJS:.o=.c)
 DEPS=$(SOURCES:.c=.dep)
 HEADERS=debmalloc.h debmalloc_macros.h
-CFLAGS=-Wall -Werror -Wextra -Wno-unused-function -Wno-unused-parameter\
-	-Wno-use-after-free -fPIC -g
+CFLAGS=-Wall -Werror -Wextra -std=gnu17 -pedantic -Wno-unused-function\
+	-Wno-unused-parameter -Wno-use-after-free -fPIC -g
 
 .PHONY: all format check clean
 
