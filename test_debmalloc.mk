@@ -12,8 +12,7 @@ OBJS=test_debmalloc.o
 SOURCES=$(OBJS:.o=.c)
 DEPS=$(SOURCES:.c=.dep)
 
-CFLAGS=-Wall -Werror -Wextra -g
-LDLIBS=-L. -ldebmalloc
+CFLAGS=-Wall -Werror -Wextra -std=gnu17 -pedantic -g
 
 ifdef USE_DEBMALLOC
 CFLAGS+=-DUSE_DEBMALLOC=$(USE_DEBMALLOC)
